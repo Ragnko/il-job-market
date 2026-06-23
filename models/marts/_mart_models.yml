@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: dim_country
+    description: European countries with region grouping and EU membership flag.
+    columns:
+      - name: country_name
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_role_family
+    description: Controlled list of data-adjacent role families with display ordering.
+    columns:
+      - name: role_family_id
+        tests:
+          - unique
+          - not_null
+      - name: role_family
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_seniority
+    description: Seniority tiers derived from years of professional coding experience.
+    columns:
+      - name: seniority_tier
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_compensation
+    description: >
+      One row per survey respondent who is a European data professional with
+      a valid compensation figure. Materialized as an incremental table;
+      new loads append without reprocessing the full history.
+    columns:
+      - name: response_id
+        tests:
+          - unique
+          - not_null
+      - name: comp_yearly_usd
+        tests:
+          - not_null
+
+  - name: mart_salary_by_region
+    description: >
+      Pre-aggregated salary statistics by country, role family, and seniority.
+      Segments with fewer than 5 respondents are suppressed to avoid misleading
+      statistics from tiny samples. This is the primary table for the BI dashboard.
+    columns:
+      - name: respondent_count
+        description: Suppressed to >= 5 per segment.
+
+  - name: mart_job_market_kpis
+    description: >
+      Pan-European headline KPIs per role family and seniority tier.
+      Used for scorecards and high-level comparisons in the dashboard.

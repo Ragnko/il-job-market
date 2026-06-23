@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: int_roles_classified
+    description: >
+      Survey responses filtered to European data professionals only.
+      Role family and seniority tier are derived here using macros so the
+      classification logic lives in one place and can be changed centrally.
+    columns:
+      - name: response_id
+        tests:
+          - unique
+          - not_null
+      - name: role_family
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Data Engineering
+                - Data Analytics
+                - Data Science
+                - ML / AI Engineering
+                - Database Administration
+      - name: seniority_tier
+        tests:
+          - not_null
+          - accepted_values:
+              values: [Junior, Mid, Senior, "Staff / Lead", Unknown]
+
+  - name: int_salary_filtered
+    description: >
+      Adds per-country P1/P99 salary bounds and excludes extreme outliers.
+      A respondent is kept only if their salary falls within the country-level
+      1st–99th percentile range, preventing a handful of extreme values from
+      distorting the median.
+    columns:
+      - name: response_id
+        tests:
+          - unique
+          - not_null

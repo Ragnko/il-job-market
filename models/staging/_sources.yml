@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ env_var('DBT_BQ_PROJECT') }}"
+    schema: raw
+    description: >
+      Raw Stack Overflow Developer Survey 2024 data loaded into BigQuery.
+      Annual snapshot (~65k respondents globally). European data professionals
+      are the target population for this project.
+    tables:
+      - name: so_survey_2024
+        description: >
+          One row per survey response. Compensation is standardised to USD/year
+          by Stack Overflow in the ConvertedCompYearly column. DevType is a
+          semicolon-separated multi-select field.
+        loaded_at_field: _bq_loaded_at
+        freshness:
+          warn_after: {count: 400, period: day}
+          error_after: {count: 800, period: day}
+        columns:
+          - name: ResponseId
+            description: Unique survey response identifier.
+            tests:
+              - unique
+              - not_null
+          - name: Country
+            tests:
+              - not_null
+          - name: DevType
+            description: >
+              Semicolon-separated list of developer roles selected by the respondent.
+          - name: YearsCodePro
+            description: >
+              Years coding professionally. String field; 'NA' means not answered.
+          - name: ConvertedCompYearly
+            description: >
+              Annual total compensation converted to USD by Stack Overflow.
+              NULL when respondent skipped compensation or currency was not convertible.
+          - name: _bq_loaded_at
+            description: >
+              Timestamp added at BigQuery load time via the load script.
+              Used for source freshness checks.

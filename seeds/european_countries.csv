@@ -1,0 +1,41 @@
+country_name,eu_region,eu_member,typical_currency
+Austria,Western Europe,true,EUR
+Belgium,Western Europe,true,EUR
+Cyprus,Southern Europe,true,EUR
+Czech Republic,Central Europe,true,CZK
+Denmark,Northern Europe,true,DKK
+Estonia,Northern Europe,true,EUR
+Finland,Northern Europe,true,EUR
+France,Western Europe,true,EUR
+Germany,Western Europe,true,EUR
+Greece,Southern Europe,true,EUR
+Hungary,Central Europe,true,HUF
+Ireland,Western Europe,true,EUR
+Italy,Southern Europe,true,EUR
+Latvia,Northern Europe,true,EUR
+Lithuania,Northern Europe,true,EUR
+Luxembourg,Western Europe,true,EUR
+Malta,Southern Europe,true,EUR
+Netherlands,Western Europe,true,EUR
+Poland,Central Europe,true,PLN
+Portugal,Southern Europe,true,EUR
+Romania,Eastern Europe,true,RON
+Slovakia,Central Europe,true,EUR
+Slovenia,Central Europe,true,EUR
+Spain,Southern Europe,true,EUR
+Sweden,Northern Europe,true,SEK
+Bulgaria,Eastern Europe,true,BGN
+Croatia,Southern Europe,true,EUR
+Albania,Southern Europe,false,ALL
+Bosnia and Herzegovina,Southern Europe,false,BAM
+Iceland,Northern Europe,false,ISK
+Kosovo,Southern Europe,false,EUR
+Moldova,Eastern Europe,false,MDL
+Montenegro,Southern Europe,false,EUR
+North Macedonia,Southern Europe,false,MKD
+Norway,Northern Europe,false,NOK
+Serbia,Southern Europe,false,RSD
+Switzerland,Western Europe,false,CHF
+Ukraine,Eastern Europe,false,UAH
+United Kingdom,Western Europe,false,GBP
+Turkey,Southern Europe,false,TRY

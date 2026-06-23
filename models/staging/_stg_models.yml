@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_survey_responses
+    description: >
+      Cleaned and renamed survey responses. Rows with no compensation data
+      or implausible salary values (< $10k or > $500k USD/year) are excluded.
+      All respondents are retained here regardless of country or role — the
+      European and data-role filter is applied downstream in intermediate models.
+    columns:
+      - name: response_id
+        description: Surrogate key derived from ResponseId.
+        tests:
+          - unique
+          - not_null
+      - name: country_name
+        tests:
+          - not_null
+      - name: comp_yearly_usd
+        tests:
+          - not_null
+      - name: dev_type_raw
+        tests:
+          - not_null
+      - name: employment_type
+        tests:
+          - not_null
