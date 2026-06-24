@@ -1,41 +1,41 @@
-country_name,eu_region,eu_member,typical_currency
-Austria,Western Europe,true,EUR
-Belgium,Western Europe,true,EUR
-Cyprus,Southern Europe,true,EUR
-Czech Republic,Central Europe,true,CZK
-Denmark,Northern Europe,true,DKK
-Estonia,Northern Europe,true,EUR
-Finland,Northern Europe,true,EUR
-France,Western Europe,true,EUR
-Germany,Western Europe,true,EUR
-Greece,Southern Europe,true,EUR
-Hungary,Central Europe,true,HUF
-Ireland,Western Europe,true,EUR
-Italy,Southern Europe,true,EUR
-Latvia,Northern Europe,true,EUR
-Lithuania,Northern Europe,true,EUR
-Luxembourg,Western Europe,true,EUR
-Malta,Southern Europe,true,EUR
-Netherlands,Western Europe,true,EUR
-Poland,Central Europe,true,PLN
-Portugal,Southern Europe,true,EUR
-Romania,Eastern Europe,true,RON
-Slovakia,Central Europe,true,EUR
-Slovenia,Central Europe,true,EUR
-Spain,Southern Europe,true,EUR
-Sweden,Northern Europe,true,SEK
-Bulgaria,Eastern Europe,true,BGN
-Croatia,Southern Europe,true,EUR
-Albania,Southern Europe,false,ALL
-Bosnia and Herzegovina,Southern Europe,false,BAM
-Iceland,Northern Europe,false,ISK
-Kosovo,Southern Europe,false,EUR
-Moldova,Eastern Europe,false,MDL
-Montenegro,Southern Europe,false,EUR
-North Macedonia,Southern Europe,false,MKD
-Norway,Northern Europe,false,NOK
-Serbia,Southern Europe,false,RSD
-Switzerland,Western Europe,false,CHF
-Ukraine,Eastern Europe,false,UAH
-United Kingdom,Western Europe,false,GBP
-Turkey,Southern Europe,false,TRY
+country_code,country_name,eu_region,eu_member,typical_currency
+AT,Austria,Western Europe,true,EUR
+BE,Belgium,Western Europe,true,EUR
+CY,Cyprus,Southern Europe,true,EUR
+CZ,Czech Republic,Central Europe,true,CZK
+DK,Denmark,Northern Europe,true,DKK
+EE,Estonia,Northern Europe,true,EUR
+FI,Finland,Northern Europe,true,EUR
+FR,France,Western Europe,true,EUR
+DE,Germany,Western Europe,true,EUR
+GR,Greece,Southern Europe,true,EUR
+HU,Hungary,Central Europe,true,HUF
+IE,Ireland,Western Europe,true,EUR
+IT,Italy,Southern Europe,true,EUR
+LV,Latvia,Northern Europe,true,EUR
+LT,Lithuania,Northern Europe,true,EUR
+LU,Luxembourg,Western Europe,true,EUR
+MT,Malta,Southern Europe,true,EUR
+NL,Netherlands,Western Europe,true,EUR
+PL,Poland,Central Europe,true,PLN
+PT,Portugal,Southern Europe,true,EUR
+RO,Romania,Eastern Europe,true,RON
+SK,Slovakia,Central Europe,true,EUR
+SI,Slovenia,Central Europe,true,EUR
+ES,Spain,Southern Europe,true,EUR
+SE,Sweden,Northern Europe,true,SEK
+BG,Bulgaria,Eastern Europe,true,BGN
+HR,Croatia,Southern Europe,true,EUR
+AL,Albania,Southern Europe,false,ALL
+BA,Bosnia and Herzegovina,Southern Europe,false,BAM
+IS,Iceland,Northern Europe,false,ISK
+XK,Kosovo,Southern Europe,false,EUR
+MD,Moldova,Eastern Europe,false,MDL
+ME,Montenegro,Southern Europe,false,EUR
+MK,North Macedonia,Southern Europe,false,MKD
+NO,Norway,Northern Europe,false,NOK
+RS,Serbia,Southern Europe,false,RSD
+CH,Switzerland,Western Europe,false,CHF
+UA,Ukraine,Eastern Europe,false,UAH
+GB,United Kingdom,Western Europe,false,GBP
+TR,Turkey,Southern Europe,false,TRY

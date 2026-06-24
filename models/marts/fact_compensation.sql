@@ -12,25 +12,21 @@ with source as (
 
 select
     response_id,
+    country_code,
     country_name,
+    eu_region,
+    eu_member,
     role_family,
     seniority_tier,
-    employment_type,
-    org_size,
-    industry,
-    education_level,
+    employment_type_code,
+    company_size,
+    remote_ratio,
     comp_yearly_usd,
-    years_code_pro,
-    years_code_total,
-    languages_used,
-    databases_used,
-    platforms_used,
+    work_year,
     _bq_loaded_at
 
 from source
 
 {% if is_incremental() %}
-    -- on incremental runs, only process rows newer than what's already in the table;
-    -- for a live feed this would be a posting date; for the SO survey it covers reruns
     where _bq_loaded_at > (select max(_bq_loaded_at) from {{ this }})
 {% endif %}

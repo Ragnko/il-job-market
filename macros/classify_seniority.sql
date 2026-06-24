@@ -1,9 +1,9 @@
-{% macro classify_seniority(years_col) %}
+{% macro classify_seniority(exp_level_col) %}
     case
-        when {{ years_col }} is null  then 'Unknown'
-        when {{ years_col }} < 3      then 'Junior'
-        when {{ years_col }} < 6      then 'Mid'
-        when {{ years_col }} < 10     then 'Senior'
-        else                               'Staff / Lead'
+        when {{ exp_level_col }} = 'EN' then 'Junior'
+        when {{ exp_level_col }} = 'MI' then 'Mid'
+        when {{ exp_level_col }} = 'SE' then 'Senior'
+        when {{ exp_level_col }} = 'EX' then 'Staff / Lead'
+        else                                 'Unknown'
     end
 {% endmacro %}

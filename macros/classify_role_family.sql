@@ -1,10 +1,18 @@
-{% macro classify_role_family(dev_type_col) %}
+{% macro classify_role_family(job_title_col) %}
     case
-        when {{ dev_type_col }} like '%Data engineer%'              then 'Data Engineering'
-        when {{ dev_type_col }} like '%Data or business analyst%'   then 'Data Analytics'
-        when {{ dev_type_col }} like '%Data scientist%'             then 'Data Science'
-        when {{ dev_type_col }} like '%machine learning%'           then 'ML / AI Engineering'
-        when {{ dev_type_col }} like '%Database administrator%'     then 'Database Administration'
-        else                                                              'Other'
+        when lower({{ job_title_col }}) like '%data engineer%'         then 'Data Engineering'
+        when lower({{ job_title_col }}) like '%analytics engineer%'    then 'Data Engineering'
+        when lower({{ job_title_col }}) like '%data analyst%'          then 'Data Analytics'
+        when lower({{ job_title_col }}) like '%business analyst%'      then 'Data Analytics'
+        when lower({{ job_title_col }}) like '%bi %'                   then 'Data Analytics'
+        when lower({{ job_title_col }}) like '%data scientist%'        then 'Data Science'
+        when lower({{ job_title_col }}) like '%research scientist%'    then 'Data Science'
+        when lower({{ job_title_col }}) like '%machine learning%'      then 'ML / AI Engineering'
+        when lower({{ job_title_col }}) like '%ml engineer%'           then 'ML / AI Engineering'
+        when lower({{ job_title_col }}) like '%ai engineer%'           then 'ML / AI Engineering'
+        when lower({{ job_title_col }}) like '%nlp%'                   then 'ML / AI Engineering'
+        when lower({{ job_title_col }}) like '%database%'              then 'Database Administration'
+        when lower({{ job_title_col }}) like '%dba%'                   then 'Database Administration'
+        else                                                                 'Other'
     end
 {% endmacro %}
