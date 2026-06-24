@@ -19,8 +19,6 @@ select
     role_family,
     seniority_tier,
     employment_type_code,
-    company_size,
-    remote_ratio,
     comp_yearly_usd,
     work_year,
     _bq_loaded_at

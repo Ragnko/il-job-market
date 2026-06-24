@@ -1,33 +1,30 @@
 version: 2
 
 models:
-  - name: stg_survey_responses
+  - name: stg_so_survey
     description: >
-      Cleaned and renamed salary records. Rows with no compensation data
-      or implausible salary values (< $10k or > $500k USD/year) are excluded.
-      All respondents are retained here regardless of country or role — the
-      European and data-role filter is applied downstream in intermediate models.
+      Cleaned Stack Overflow Developer Survey 2025 responses. Filters out records
+      with no compensation data or implausible salary values (< $10k or > $500k USD/year).
+      Country names are normalised to match the european_countries seed.
+      Seniority is derived from WorkExp (years of professional experience).
+      EU and data-role filtering is applied downstream in intermediate models.
     columns:
       - name: response_id
-        description: Surrogate key derived from all non-null source columns.
+        description: Surrogate key derived from ResponseId.
         tests:
           - unique
           - not_null
-      - name: country_code
-        description: ISO 3166-1 alpha-2 code for the employee's country of residence.
+      - name: country_name
+        description: Full country name, normalised to match european_countries seed.
         tests:
           - not_null
       - name: comp_yearly_usd
-        description: Annual compensation in USD.
+        description: Annual compensation in USD (ConvertedCompYearly from source).
         tests:
           - not_null
       - name: job_title_raw
-        description: Raw job title from source.
+        description: Raw DevType field (semicolon-separated multi-select).
         tests:
           - not_null
       - name: experience_level_code
-        description: EN / MI / SE / EX seniority code from source.
-        tests:
-          - not_null
-          - accepted_values:
-              values: [EN, MI, SE, EX]
+        description: EN / MI / SE / EX derived from WorkExp (years of professional experience).

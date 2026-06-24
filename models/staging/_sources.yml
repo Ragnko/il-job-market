@@ -5,36 +5,33 @@ sources:
     database: "{{ env_var('DBT_BQ_PROJECT') }}"
     schema: raw
     description: >
-      Data Science Job Salaries dataset (ai-jobs.net) loaded into BigQuery.
-      Multi-year snapshot (2020–2024) of data/ML/AI role compensation globally.
-      European data professionals are the target population for this project.
+      Stack Overflow Developer Survey 2025 loaded into BigQuery.
+      ~49k global respondents; European data professionals are the target population.
     tables:
-      - name: ds_salaries
+      - name: so_survey
         description: >
-          One row per salary record. Compensation is already standardised to USD/year
-          in the salary_in_usd column. experience_level uses EN/MI/SE/EX codes.
+          Stack Overflow Developer Survey 2025. One row per respondent.
+          ~53k global respondents. ConvertedCompYearly is annual compensation
+          converted to USD by Stack Overflow.
         loaded_at_field: _bq_loaded_at
         freshness:
           warn_after: {count: 400, period: day}
           error_after: {count: 800, period: day}
         columns:
-          - name: job_title
-            description: Job title of the role.
+          - name: ResponseId
+            description: Unique survey response identifier.
             tests:
+              - unique
               - not_null
-          - name: employee_residence
-            description: ISO 3166-1 alpha-2 country code of the employee's residence.
+          - name: Country
+            description: Full country name of the respondent. Nullable — many survey respondents skip this field. Null rows are dropped downstream via inner join on european_countries.
             tests:
-              - not_null
-          - name: salary_in_usd
-            description: Annual total compensation converted to USD.
-            tests:
-              - not_null
-          - name: experience_level
-            description: >
-              Seniority code: EN=Entry, MI=Mid, SE=Senior, EX=Executive/Director.
-            tests:
-              - accepted_values:
-                  values: [EN, MI, SE, EX]
+              - not_null:
+                  config:
+                    severity: warn
+          - name: ConvertedCompYearly
+            description: Annual total compensation converted to USD by Stack Overflow.
+          - name: DevType
+            description: Semicolon-separated list of developer role types.
           - name: _bq_loaded_at
-            description: Timestamp added at BigQuery load time. Used for source freshness checks.
+            description: Timestamp added at BigQuery load time.
