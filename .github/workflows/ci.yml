@@ -27,21 +27,21 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: dbt deps
-        run: dbt deps
+        run: dbt deps --profiles-dir .
         env:
           DBT_BQ_PROJECT: ${{ vars.DBT_BQ_PROJECT }}
 
       - name: dbt compile
-        run: dbt compile
+        run: dbt compile --profiles-dir .
         env:
           DBT_BQ_PROJECT: ${{ vars.DBT_BQ_PROJECT }}
 
       - name: dbt seed (reference data only)
-        run: dbt seed
+        run: dbt seed --profiles-dir .
         env:
           DBT_BQ_PROJECT: ${{ vars.DBT_BQ_PROJECT }}
 
       - name: dbt test (sources + staging)
-        run: dbt test --select staging
+        run: dbt test --select staging --profiles-dir .
         env:
           DBT_BQ_PROJECT: ${{ vars.DBT_BQ_PROJECT }}
