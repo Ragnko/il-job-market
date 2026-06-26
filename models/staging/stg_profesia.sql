@@ -29,23 +29,30 @@ cleaned as (
         trim(split(location, ',')[safe_offset(0)])                           as location_city,
         location                                                             as location_raw,
 
-        -- salary: strip thousand-separator spaces, then extract min/max and period
+        -- salary: EUR-only (drops CZK and other currencies); NULLs kept for unpublished salaries
         case
-            when salary_text like '%/mesiac%' then 'monthly'
-            when salary_text like '%/hod.%'   then 'hourly'
+            when salary_text like '%EUR/mesiac%' then 'monthly'
+            when salary_text like '%EUR/hod.%'   then 'hourly'
         end                                                                  as salary_period,
 
+        -- strip thousand-separator spaces and comma decimals before extracting integers
         safe_cast(
             regexp_extract(
-                regexp_replace(salary_text, r'(\d)\s(\d)', r'\1\2'),
-                r'(\d{3,})'
+                regexp_replace(
+                    regexp_replace(salary_text, r'(\d)\s(\d)', r'\1\2'),
+                    r',\d+', ''
+                ),
+                r'(\d+)'
             ) as int64
         )                                                                    as salary_eur_min,
 
         safe_cast(
             regexp_extract(
-                regexp_replace(salary_text, r'(\d)\s(\d)', r'\1\2'),
-                r'\d+\s*-\s*(\d{3,})'
+                regexp_replace(
+                    regexp_replace(salary_text, r'(\d)\s(\d)', r'\1\2'),
+                    r',\d+', ''
+                ),
+                r'\d+\s*-\s*(\d+)'
             ) as int64
         )                                                                    as salary_eur_max,
 
