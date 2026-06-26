@@ -8,23 +8,29 @@
 
 with source as (
     select * from {{ ref('int_salary_filtered') }}
+),
+
+fx as (
+    select * from {{ ref('exchange_rates') }}
 )
 
 select
-    response_id,
-    country_code,
-    country_name,
-    eu_region,
-    eu_member,
-    role_family,
-    seniority_tier,
-    employment_type_code,
-    comp_yearly_usd,
-    work_year,
-    _bq_loaded_at
+    s.response_id,
+    s.country_code,
+    s.country_name,
+    s.eu_region,
+    s.eu_member,
+    s.role_family,
+    s.seniority_tier,
+    s.employment_type_code,
+    s.comp_yearly_usd,
+    round(s.comp_yearly_usd * fx.usd_to_eur, 0) as comp_yearly_eur,
+    s.work_year,
+    s._bq_loaded_at
 
-from source
+from source s
+left join fx on fx.year = s.work_year
 
 {% if is_incremental() %}
-    where _bq_loaded_at > (select max(_bq_loaded_at) from {{ this }})
+    where s._bq_loaded_at > (select max(_bq_loaded_at) from {{ this }})
 {% endif %}

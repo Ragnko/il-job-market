@@ -10,37 +10,65 @@ with source as (
     select * from {{ ref('stg_profesia') }}
 ),
 
+fx as (
+    select * from {{ ref('exchange_rates') }}
+),
+
 final as (
     select
-        listing_id,
-        offer_id,
-        job_title_raw,
-        company_name,
-        location_city,
-        location_raw,
-        is_remote,
-        salary_period,
-        salary_eur_min,
-        salary_eur_max,
+        s.listing_id,
+        s.offer_id,
+        s.job_title_raw,
+        s.company_name,
+        s.location_city,
+        s.location_raw,
+        s.is_remote,
+        s.salary_period,
+        s.salary_eur_min,
+        s.salary_eur_max,
 
         -- normalise hourly to monthly for comparison (approx 160h/month)
         case
-            when salary_period = 'monthly' then salary_eur_min
-            when salary_period = 'hourly'  then round(salary_eur_min * 160, 0)
+            when s.salary_period = 'monthly' then s.salary_eur_min
+            when s.salary_period = 'hourly'  then round(s.salary_eur_min * 160, 0)
         end                                as salary_monthly_eur_min,
 
         case
-            when salary_period = 'monthly' then salary_eur_max
-            when salary_period = 'hourly'  then round(salary_eur_max * 160, 0)
+            when s.salary_period = 'monthly' then s.salary_eur_max
+            when s.salary_period = 'hourly'  then round(s.salary_eur_max * 160, 0)
         end                                as salary_monthly_eur_max,
 
-        salary_text_raw,
-        contact_name_hashed,
-        listing_url,
-        scraped_date,
-        _scraped_at
+        -- annualised salary in EUR
+        case
+            when s.salary_period = 'monthly' then s.salary_eur_min * 12
+            when s.salary_period = 'hourly'  then round(s.salary_eur_min * 160, 0) * 12
+        end                                as salary_yearly_eur_min,
 
-    from source
+        case
+            when s.salary_period = 'monthly' then s.salary_eur_max * 12
+            when s.salary_period = 'hourly'  then round(s.salary_eur_max * 160, 0) * 12
+        end                                as salary_yearly_eur_max,
+
+        -- annualised salary converted to USD via yearly exchange rate
+        case
+            when s.salary_period = 'monthly' then round(s.salary_eur_min * 12 * fx.eur_to_usd, 0)
+            when s.salary_period = 'hourly'  then round(s.salary_eur_min * 160 * 12 * fx.eur_to_usd, 0)
+        end                                as salary_yearly_usd_min,
+
+        case
+            when s.salary_period = 'monthly' then round(s.salary_eur_max * 12 * fx.eur_to_usd, 0)
+            when s.salary_period = 'hourly'  then round(s.salary_eur_max * 160 * 12 * fx.eur_to_usd, 0)
+        end                                as salary_yearly_usd_max,
+
+        s.salary_text_raw,
+        s.contact_name_hashed,
+        s.listing_url,
+        s.work_year,
+        s.scraped_date,
+        s._scraped_at
+
+    from source s
+    left join fx on fx.year = s.work_year
 )
 
 select * from final
