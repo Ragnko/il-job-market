@@ -42,6 +42,8 @@ models:
       - name: comp_yearly_usd
         tests:
           - not_null
+      - name: comp_yearly_eur
+        description: Yearly compensation converted to EUR via the exchange_rates seed (year-matched).
 
   - name: mart_salary_by_region
     description: >
@@ -68,5 +70,15 @@ models:
         tests:
           - unique
           - not_null
+      - name: work_year
+        description: Calendar year derived from scraped_date, used to join exchange_rates.
       - name: salary_monthly_eur_min
         description: Minimum salary normalised to monthly EUR (hourly × 160h).
+      - name: salary_yearly_eur_min
+        description: Annualised minimum salary in EUR (monthly × 12).
+      - name: salary_yearly_eur_max
+        description: Annualised maximum salary in EUR (monthly × 12).
+      - name: salary_yearly_usd_min
+        description: Annualised minimum salary converted to USD via exchange_rates seed (year-matched).
+      - name: salary_yearly_usd_max
+        description: Annualised maximum salary converted to USD via exchange_rates seed (year-matched).

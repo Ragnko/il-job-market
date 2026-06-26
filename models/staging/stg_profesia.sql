@@ -69,7 +69,8 @@ cleaned as (
         -- retained only in raw.profesia_listings under access control
 
         _scraped_at,
-        date(_scraped_at)                                                    as scraped_date
+        date(_scraped_at)                                                    as scraped_date,
+        extract(year from date(_scraped_at))                                 as work_year
 
     from deduped
     where offer_id is not null
