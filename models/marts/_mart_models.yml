@@ -56,3 +56,17 @@ models:
     description: >
       Pan-European headline KPIs per role family and seniority tier.
       Used for scorecards and high-level comparisons in the dashboard.
+
+  - name: fact_job_listings
+    description: >
+      One row per profesia.sk listing per scrape batch. Salary normalised to monthly EUR.
+      contact_name_hashed is the only PII-derived field — raw name is excluded.
+      Incremental model — merges on listing_id (offer_id + scraped_at).
+    columns:
+      - name: listing_id
+        description: Surrogate key — offer_id + _scraped_at.
+        tests:
+          - unique
+          - not_null
+      - name: salary_monthly_eur_min
+        description: Minimum salary normalised to monthly EUR (hourly × 160h).
