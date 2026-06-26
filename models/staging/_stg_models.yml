@@ -28,3 +28,29 @@ models:
           - not_null
       - name: experience_level_code
         description: EN / MI / SE / EX derived from WorkExp (years of professional experience).
+
+  - name: stg_profesia
+    description: >
+      Cleaned profesia.sk job listings. Salary text is parsed into min/max numeric fields.
+      contact_name is hashed with MD5 for pseudonymisation — the raw value is not
+      propagated beyond the raw layer. One row per scrape event per listing.
+    columns:
+      - name: listing_id
+        description: Surrogate key derived from offer_id + _scraped_at.
+        tests:
+          - unique
+          - not_null
+      - name: offer_id
+        description: Profesia.sk numeric listing ID.
+        tests:
+          - not_null
+      - name: salary_period
+        description: monthly or hourly, parsed from salary_text_raw.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['monthly', 'hourly']
+              config:
+                severity: warn
+      - name: contact_name_hashed
+        description: MD5 hex hash of recruiter name. Null when contact name was not published.
