@@ -1,3 +1,6 @@
+.user.yml
+IL_INTERVIEW_ASSIGNMENT.md
+Looker.md
 target/
 dbt_packages/
 logs/
