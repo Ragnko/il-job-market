@@ -17,8 +17,6 @@ cleaned as (
         safe_cast(offer_id as int64)                                         as offer_id,
         title                                                                as job_title_raw,
         company                                                              as company_name,
-        url                                                                  as listing_url,
-
         -- location: flag remote, extract city as first comma-delimited token
         case
             when lower(location) like '%z domu%'
@@ -27,7 +25,6 @@ cleaned as (
         end                                                                  as is_remote,
 
         trim(split(location, ',')[safe_offset(0)])                           as location_city,
-        location                                                             as location_raw,
 
         -- salary: EUR-only (drops CZK and other currencies); NULLs kept for unpublished salaries
         case
@@ -56,24 +53,13 @@ cleaned as (
             ) as int64
         )                                                                    as salary_eur_max,
 
-        salary_text                                                          as salary_text_raw,
-
-        -- PII handling: hash contact_name for pseudonymisation, suppress raw value
-        case
-            when contact_name is not null
-            then to_hex(md5(trim(contact_name)))
-            else null
-        end                                                                  as contact_name_hashed,
-
-        -- raw name intentionally excluded from this model — not passed downstream
-        -- retained only in raw.profesia_listings under access control
-
         _scraped_at,
         date(_scraped_at)                                                    as scraped_date,
         extract(year from date(_scraped_at))                                 as work_year
 
     from deduped
     where offer_id is not null
+      and {{ is_it_job('lower(title)') }}
 )
 
 select * from cleaned
