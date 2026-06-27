@@ -52,5 +52,3 @@ models:
                 values: ['monthly', 'hourly']
               config:
                 severity: warn
-      - name: contact_name_hashed
-        description: MD5 hex hash of recruiter name. Null when contact name was not published.

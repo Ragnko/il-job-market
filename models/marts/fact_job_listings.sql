@@ -21,7 +21,6 @@ final as (
         s.job_title_raw,
         s.company_name,
         s.location_city,
-        s.location_raw,
         s.is_remote,
         s.salary_period,
         s.salary_eur_min,
@@ -60,9 +59,6 @@ final as (
             when s.salary_period = 'hourly'  then round(s.salary_eur_max * 160 * 12 * fx.eur_to_usd, 0)
         end                                as salary_yearly_usd_max,
 
-        s.salary_text_raw,
-        s.contact_name_hashed,
-        s.listing_url,
         s.work_year,
         s.scraped_date,
         s._scraped_at
