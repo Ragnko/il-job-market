@@ -19,6 +19,8 @@ final as (
         s.listing_id,
         s.offer_id,
         s.job_title_raw,
+        s.role_family,
+        s.seniority,
         s.company_name,
         s.location_city,
         s.is_remote,
