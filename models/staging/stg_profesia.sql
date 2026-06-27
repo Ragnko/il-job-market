@@ -53,6 +53,9 @@ cleaned as (
             ) as int64
         )                                                                    as salary_eur_max,
 
+        {{ classify_role_family('title') }}                                 as role_family,
+        {{ classify_seniority_from_title('title') }}                      as seniority,
+
         _scraped_at,
         date(_scraped_at)                                                    as scraped_date,
         extract(year from date(_scraped_at))                                 as work_year
@@ -63,3 +66,4 @@ cleaned as (
 )
 
 select * from cleaned
+where role_family != 'Other'
