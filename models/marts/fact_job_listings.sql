@@ -18,6 +18,7 @@ final as (
     select
         s.listing_id,
         s.offer_id,
+        s.listing_url,
         s.job_title_raw,
         s.role_family,
         s.seniority,

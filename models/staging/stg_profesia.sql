@@ -15,6 +15,7 @@ cleaned as (
         {{ dbt_utils.generate_surrogate_key(['offer_id']) }}                 as listing_id,
 
         safe_cast(offer_id as int64)                                         as offer_id,
+        url                                                                  as listing_url,
         title                                                                as job_title_raw,
         company                                                              as company_name,
         -- location: flag remote, extract city as first comma-delimited token
