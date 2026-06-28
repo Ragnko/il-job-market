@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v7.0.0
 
       - name: Set up Python
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v6.3.0
         with:
           python-version: "3.11"
 
@@ -22,7 +22,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2.1.8
+        uses: google-github-actions/auth@v3.0.0
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
