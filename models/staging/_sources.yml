@@ -53,6 +53,6 @@ sources:
             tests:
               - not_null
           - name: contact_name
-            description: Recruiter full name as shown on the listing. PII — hashed in staging.
+            description: Recruiter full name as shown on the listing. PII — excluded from staging and all downstream models.
           - name: _scraped_at
             description: Timestamp when the row was scraped and loaded.
